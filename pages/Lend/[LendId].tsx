@@ -1,10 +1,34 @@
-import type { NextPage } from 'next'
+import { SelectkeepLorB } from "../../slices/lorbSlice/lorbSlice";
+import { NegotiateTemplate } from "../../components/templates";
+import { GetServerSideProps, NextPage } from "next";
 
-
-const Lend: NextPage = () => {
-  return (
-    <div></div>
-  )
+interface Props {
+  id:string
 }
 
-export default Lend
+export const Lend :NextPage<Props>= ({
+  id
+}) => {
+    return (
+        <>
+            {
+                <NegotiateTemplate
+                        id={id}
+                        willSelect={SelectkeepLorB}
+                        KeeponProps="LKeepOn"
+                />
+            }
+        </>
+    );
+};
+
+export const getServerSideProps :GetServerSideProps = async (context) => {
+  const { id } = context.query;
+
+  return { 
+    props:{
+      id
+  } }
+}
+
+export default Lend;
