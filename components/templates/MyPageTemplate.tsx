@@ -15,13 +15,10 @@ import { FC, useEffect } from "react";
 import { makeStyles } from "@material-ui/styles";
 import { ApproveAndReject, FormBuilder } from "../molecules";
 import { propsArray } from "../molecules/FormBuilder";
-import { WrapMypageUser } from ".";
-import { 
-    Switch,
-    Route,
-    useRouteMatch,
-   } from 'react-router-dom';
+import { ViewRouter } from "../organisms";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { GetServerSideProps } from "next";
 
 const useStyles = makeStyles((thema) => ({
     button:{
@@ -64,7 +61,7 @@ const MayPageTemplate :FC<Props>= ({
     const followUsers = useAppSelector(SelectFollowUser);
     const followERUsers = useAppSelector(SelectFollowERUser);
     const dispatch = useAppDispatch();
-    const match = useRouteMatch();
+    const route = useRouter();
     const { formState:{errors} , control, getValues } = useForm<FieldValues>({
         mode:"all"
     })
@@ -118,7 +115,12 @@ const MayPageTemplate :FC<Props>= ({
                                 </Box>
 
                                 <Box>
-                                        <Switch>
+                                        <ViewRouter 
+                                            paths={[]}
+                                            followUsers={followUsers}
+                                            followERUsers={followERUsers}
+                                        />
+                                        {/* <Switch>
                                             <Route 
                                                 path={`${match.path}/showfollow`}   
                                             >
@@ -130,12 +132,22 @@ const MayPageTemplate :FC<Props>= ({
                                             >
                                                 <WrapMypageUser userInfo={followERUsers} />
                                             </Route>
-                                        </Switch>                                                       
+                                        </Switch>                                                        */}
                                 </Box>
                         </Box>
             </Container>
         </>
     )
+}
+
+export const getServerSideProps :GetServerSideProps = async (req) => {
+  const query = req.query 
+
+  return {
+    props: {
+      paths: query.paths ?? []
+    }
+  }
 }
 
 export default MayPageTemplate
