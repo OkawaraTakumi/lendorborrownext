@@ -79,63 +79,50 @@ const MayPageTemplate :FC<Props>= ({
 
     return (
         <>  
-            <Container className={classes.container}>
-                <MypageUser user={user}/>
-                        <Box>
-                                <Box>
-                                    <FormBuilder
-                                        propsArray={propsArrayFor}
-                                        control={control}
-                                        textWillShow={'フォローする'}
-                                        errors={errors}
-                                        handleFunc={handleFunc}
-                                        className={classes}
-                                    />
-                                </Box>
-                                <Box display="flex"  className={classes.ButtonsBox}>
-                                    {
-                                        buttonArrays 
-                                        &&
-                                        buttonArrays.map((property) => {
-                                            return (
-                                                <Link 
-                                                    href={`${property.propsPath}`} 
-                                                    key={property.id}
-                                                >
-                                                    <ApproveAndReject 
-                                                            textWillShow={property.textWillShow}
-                                                            className={classes.button}
-                                                            color={property.color}
-                                                            willDispatch={property.willDispatch}
-                                                    />
-                                                </Link>
-                                            )
-                                        })
-                                    }
-                                </Box>
+          <Container className={classes.container}>
+              <MypageUser user={user}/>
+                      <Box>
+                          <Box>
+                              <FormBuilder
+                                  propsArray={propsArrayFor}
+                                  control={control}
+                                  textWillShow={'フォローする'}
+                                  errors={errors}
+                                  handleFunc={handleFunc}
+                                  className={classes}
+                              />
+                          </Box>
+                          <Box display="flex"  className={classes.ButtonsBox}>
+                              {
+                                  buttonArrays 
+                                  &&
+                                  buttonArrays.map((property) => {
+                                      return (
+                                        <Link 
+                                            href={`${property.propsPath}`} 
+                                            key={property.id}
+                                        >
+                                            <ApproveAndReject 
+                                                    textWillShow={property.textWillShow}
+                                                    className={classes.button}
+                                                    color={property.color}
+                                                    willDispatch={property.willDispatch}
+                                            />
+                                        </Link>
+                                      )
+                                  })
+                              }
+                          </Box>
 
-                                <Box>
-                                        <ViewRouter 
-                                            paths={[]}
-                                            followUsers={followUsers}
-                                            followERUsers={followERUsers}
-                                        />
-                                        {/* <Switch>
-                                            <Route 
-                                                path={`${match.path}/showfollow`}   
-                                            >
-                                                <WrapMypageUser userInfo={followUsers} />
-                                            </Route>
-
-                                            <Route 
-                                                path={`${match.path}/showfollower`}  
-                                            >
-                                                <WrapMypageUser userInfo={followERUsers} />
-                                            </Route>
-                                        </Switch>                                                        */}
-                                </Box>
-                        </Box>
-            </Container>
+                          <Box>
+                              <ViewRouter 
+                                  paths={[]}
+                                  followUsers={followUsers}
+                                  followERUsers={followERUsers}
+                              />
+                          </Box>
+                      </Box>
+          </Container>
         </>
     )
 }
