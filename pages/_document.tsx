@@ -13,9 +13,6 @@ export default class MyDocument extends Document {
   render(): JSX.Element {
     return (
       <Html lang="ja">
-        <Head>
-          <meta name="theme-color"/>
-        </Head>
         <body>
           <Main />
           <NextScript />
