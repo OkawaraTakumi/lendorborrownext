@@ -1,25 +1,31 @@
-import type { AppProps } from 'next/app'
-import { Provider } from 'react-redux'
-import { store } from '../redux-app/store'
-import { Head } from 'next/document'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react';
+import { AppProps } from 'next/app';
+import { ThemeProvider } from '@material-ui/core/styles';
+import { StylesProvider } from '@material-ui/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import theme from '../components/theme';
+import { Provider } from 'react-redux';
+import { store } from '../redux-app/store';
 
-function MyApp({ Component, pageProps }: AppProps) {
+
+const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
   useEffect(() => {
-    const jssStyles = document.querySelector('#jss-server-side')
-    jssStyles?.parentElement?.removeChild(jssStyles)
-  }, []) 
+    const jssStyles: Element | null = document.querySelector('#jss-server-side');
+    if (jssStyles) {
+      jssStyles.parentElement?.removeChild(jssStyles);
+    }
+  }, []);
 
   return (
-  <>
-    <Head>
-        <title>貸し借りDB</title>
-    </Head>
     <Provider store={store}>
-        <Component {...pageProps} />
+        <StylesProvider injectFirst>
+          <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <Component {...pageProps} />
+          </ThemeProvider>
+        </StylesProvider>
     </Provider>
-  </>
-    
-  )
-}
-export default MyApp
+  );
+};
+
+export default MyApp;
