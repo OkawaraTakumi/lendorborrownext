@@ -14,7 +14,6 @@ import {
 import { buttonArray } from "../../components/templates/ShowListOfAnyLorB";
 import { ShowListOfAnyLorB } from "../../components/templates";
 
-
 const useStyles = makeStyles({
     approve:{
         margin:'20px 0 0 0'
@@ -27,6 +26,7 @@ const useStyles = makeStyles({
         justifyContent:"flex-end"
     }
 })
+
 const buttonProps :buttonArray[]=[ 
     {
         textWillShow:"拒否",
@@ -43,7 +43,8 @@ const buttonProps :buttonArray[]=[
 ]
 
 const ApproveCreate = () => {
-    const classes = useStyles();
+    // const classes = useStyles();
+    const classes = '';
     const [items, setItems] = useState<Array<resObj>>() 
     const onMaking = useAppSelector(SelectOnMaking)
     

@@ -122,7 +122,8 @@ async ({title,
       userForApprove},
       { getState ,rejectWithValue }) => {
  try {
-     const res = await axios.post(`${process.env.POST_CREATE_LORB}`, {
+  process.env.NEXT_PUBLIC_POST_CREATE_LORB
+     const res = await axios.post(`${process.env.NEXT_PUBLIC_POST_CREATE_LORB}`, {
        title,
        detailClass,
        aboutDetail,
@@ -155,7 +156,7 @@ async ({
       userForApprove
       },
       { getState ,rejectWithValue }) => {
-const res = await axios.post(`${process.env.POST_UPDATE_LORB_DETAIL}`, {
+const res = await axios.post(`${process.env.NEXT_PUBLIC_POST_UPDATE_LORB_DETAIL}`, {
   title,
   detailClass,
   aboutDetail,
@@ -181,7 +182,7 @@ async (
           id        
       },
       { getState ,rejectWithValue }) => {
-const res = await axios.put(`${process.env.PUT_APPROVE_CREATE}`, {
+const res = await axios.put(`${process.env.NEXT_PUBLIC_PUT_APPROVE_CREATE}`, {
   userTo,
   userFrom,
   id
@@ -203,7 +204,7 @@ async ({
           id        
       },
       { getState ,rejectWithValue }) => {
-const res = await axios.put(`${process.env.PUT_REJECT_CREATE}`, {
+const res = await axios.put(`${process.env.NEXT_PUBLIC_PUT_REJECT_CREATE}`, {
   userTo,
   userFrom,
   id
@@ -221,7 +222,8 @@ export const getOnMaking = createAsyncThunk<onMaking, void,
 'createSlice/getOnMaking',
 async () => {
 try {
-    const res = await axios.get(`${process.env.GET_GET_ONMAKING}`).catch(() => {console.log('通信エラー')})
+    console.log(process.env.NEXT_PUBLIC_GET_GET_ONMAKING)
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_GET_GET_ONMAKING}`).catch(() => {console.log('通信エラー')})
     res && console.log(res.data.onMaking)
     return res && res.data.onMaking
 } catch(err) {
@@ -240,7 +242,7 @@ export const getOnBeingSuggested = createAsyncThunk<onBeingSuggested, void,
 'createSlice/getOnBeingSuggested',
 async () => {
   try {
-      const res = await axios.get(`${process.env.GET_GET_ONBEING_SUGGESTED}`)
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_GET_GET_ONBEING_SUGGESTED}`)
       .catch(() => {console.log('通信エラー')})
       res && console.log(res.data.onBeingSuggested)
       return res && res.data.onBeingSuggested
@@ -260,7 +262,7 @@ export const getLorBKeepLorB = createAsyncThunk<keepLorB, void,
 'createSlice/getLorBKeepLorB',
 async () => {
   try {
-      const res = await axios.get(`${process.env.GET_GET_LORB_KEEP_LORB}`)
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_GET_GET_LORB_KEEP_LORB}`)
       .catch(() => {console.log('通信エラー')})
       // res && console.log(res.data.keepLorB)
       return res &&  res.data.keepLorB
@@ -279,7 +281,7 @@ export const getAllLorB = createAsyncThunk<AllLorB, void,
 }>(
 'createSlice/getAllLorB',
 async () => {
-const res = await axios.get(`${process.env.GET_GET_ALL_LORB}`)
+const res = await axios.get(`${process.env.NEXT_PUBLIC_GET_GET_ALL_LORB}`)
  return res.data
 }
 )
@@ -292,7 +294,7 @@ export const getLorBIhave = createAsyncThunk<AllLorBIhave, void,
 }>(
 'createSlice/getLorBIhave',
 async () => {
-const res = await axios.get(`${process.env.GET_GET_LORB_IHAVE}`)
+const res = await axios.get(`${process.env.NEXT_PUBLIC_GET_GET_LORB_IHAVE}`)
  return res.data
 }
 )
@@ -306,7 +308,7 @@ export const getLorBCompleted = createAsyncThunk<Completed, void,
 }>(
 'createSlice/getLorBCompleted',
 async () => {
-const res = await axios.get(`${process.env.GET_LORB_COMPLETED}`)
+const res = await axios.get(`${process.env.NEXT_PUBLIC_GET_LORB_COMPLETED}`)
  return res.data
 }
 )
@@ -325,7 +327,7 @@ async ({
   negotiateDetail,
   id
 }) => {
-const res = await axios.put(`${process.env.PUT_UPDATE_NEGOTIATE}`,{ 
+const res = await axios.put(`${process.env.NEXT_PUBLIC_PUT_UPDATE_NEGOTIATE}`,{ 
   userFrom,
   userTo,
   negotiateItem,
@@ -350,7 +352,7 @@ async ({
       },
       { getState ,rejectWithValue }) => {
 console.log('RejectNegotiateが呼び出されました')
-const res = await axios.put(`${process.env.PUT_REJECT_NEGOTIATE}`, {
+const res = await axios.put(`${process.env.NEXT_PUBLIC_PUT_REJECT_NEGOTIATE}`, {
   userTo,
   userFrom,
   id
@@ -371,7 +373,7 @@ async ({
   userFrom,
   id
 }) => {
-const res = await axios.put(`${process.env.PUT_DELETE_LORB_TABLE}`,{
+const res = await axios.put(`${process.env.NEXT_PUBLIC_PUT_DELETE_LORB_TABLE}`,{
   userTo,
   userFrom,
   id

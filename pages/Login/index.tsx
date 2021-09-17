@@ -54,7 +54,7 @@ const Login = () => {
   const handleFunc = () => {
       const { email, password} = getValues() 
       dispatch(loginAndFetchUser({email, password}))
-      .then(() => {router.push('/')})
+      .then(() => {user._id && router.push('/')})
       .catch(() => setErrorState('ログインに失敗しました'))
   }
 

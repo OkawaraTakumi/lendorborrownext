@@ -41,7 +41,7 @@ async (email,{ getState ,rejectWithValue }) => {
  try{
      axios.defaults.withCredentials = true;
      console.log(email)
-     const  res  = await axios.post(`${process.env.POST_FOLLOW_USER}`, email
+     const  res  = await axios.post(`${process.env.NEXT_PUBLIC_POST_FOLLOW_USER}`, email
      )
      if(res.data.success === false){
       return rejectWithValue('取得に失敗しました')
@@ -62,7 +62,7 @@ rejectValue:string
 async (_,{ rejectWithValue }) => {
  try{
      axios.defaults.withCredentials = true;
-     const  res  = await axios.get(`${process.env.GET_FOLLOW}`)
+     const  res  = await axios.get(`${process.env.NEXT_PUBLIC_GET_FOLLOW}`)
      console.log(res,'フォローデータ')
      if(res.data.success === false) {
       return rejectWithValue('取得に失敗しました')
@@ -84,7 +84,7 @@ async (_,{ getState ,rejectWithValue }) => {
 
  try{
      axios.defaults.withCredentials = true;
-     const  res  = await axios.get(`${process.env.GET_GET_FOLOWER}`)
+     const  res  = await axios.get(`${process.env.NEXT_PUBLIC_GET_GET_FOLOWER}`)
      console.log(res,'フォロワーデータ')
      return res.data.followerData
  } catch (error) {

@@ -1,31 +1,35 @@
-import React, { useEffect } from 'react';
-import { AppProps } from 'next/app';
-import { ThemeProvider } from '@material-ui/core/styles';
-import { StylesProvider } from '@material-ui/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import theme from '../components/theme';
-import { Provider } from 'react-redux';
-import { store } from '../redux-app/store';
+import { CacheProvider, EmotionCache } from "@emotion/react";
+import { CssBaseline } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/styles";
+import { AppProps } from "next/app";
+import Head from "next/head";
+import * as React from "react";
+import { Provider } from "react-redux";
+import Header from "../components/templates/Header";
+import { store } from "../redux-app/store";
 
+import createEmotionCache from "../styles/createEmotionCache";
+import theme from "../styles/theme";
 
-const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
-  useEffect(() => {
-    const jssStyles: Element | null = document.querySelector('#jss-server-side');
-    if (jssStyles) {
-      jssStyles.parentElement?.removeChild(jssStyles);
-    }
-  }, []);
+// Client-side cache, shared for the whole session of the user in the browser.
+const clientSideEmotionCache = createEmotionCache();
 
+interface MyAppProps extends AppProps {
+  emotionCache?: EmotionCache;
+}
+
+export default function MyApp(props: MyAppProps): JSX.Element {
+  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   return (
-    <Provider store={store}>
-        <StylesProvider injectFirst>
+    <CacheProvider value={emotionCache}>
+      <Provider store={store}>
           <ThemeProvider theme={theme}>
-              <CssBaseline />
-              <Component {...pageProps} />
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            <Header/>
+            <Component {...pageProps} />
           </ThemeProvider>
-        </StylesProvider>
-    </Provider>
+      </Provider>
+    </CacheProvider>
   );
-};
-
-export default MyApp;
+}

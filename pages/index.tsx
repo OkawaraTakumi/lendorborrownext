@@ -77,7 +77,6 @@ export const Home = () => {
     return (
         <div>
             {
-                user._id &&
                 <Container maxWidth="sm">
                         <div>     
                             <div className={classes.list}>
