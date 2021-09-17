@@ -140,7 +140,7 @@ export const Home = () => {
                                                             willShows={keepLorB?.LKeepOn} 
                                                             text={`${keepLorB?.LCount}件の貸しがあります`}
                                                             className={classes}
-                                                            root={'Lend'}
+                                                            root={'lend'}
                                                 />
                                         </Paper>
 
@@ -149,7 +149,7 @@ export const Home = () => {
                                                         willShows={keepLorB?.BKeepOn} 
                                                         text={`${keepLorB?.BCount}件の借りがあります`}
                                                         className={classes}
-                                                        root={'Borrow'}
+                                                        root={'borrow'}
                                                 />
                                         </Paper>    
                                     </>
