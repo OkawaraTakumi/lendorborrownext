@@ -11,7 +11,7 @@ import  Link from "next/link";
 import { useRouter } from "next/router";
 import { useAppSelector, useAppDispatch } from "../../redux-app/hooks";
 import { SelectUser, logout } from "../../slices/loginSlice/loginSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SideNav from "../organisms/SideNav";
 
 
@@ -37,6 +37,9 @@ const Header = () => {
     const dispatch = useAppDispatch();
     const router = useRouter();
     const [open, setOpen] = useState<boolean>(false)
+    useEffect(() => {
+        console.log(user)
+    },[])
 
     const handleLogout = () => {
         dispatch(logout())
@@ -48,9 +51,7 @@ const Header = () => {
             return !prevState
         })
     }
-    
-
-                    
+                        
     return (
         <div className={classes.root}>
             <CssBaseline/>

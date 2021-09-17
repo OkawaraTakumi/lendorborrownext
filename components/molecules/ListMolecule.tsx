@@ -47,10 +47,12 @@ const ListModule: NextPage<Props> = ({
                        return (
                             <ListItem key={index} className={className?.box}>
                                 <Link href={`/${root}/${index}`}>
-                                    <ListItemText 
-                                            primary={willShow.LorBBox.title}
-                                            className={className?.box}    
-                                    />
+                                    <a>
+                                        <ListItemText 
+                                                primary={willShow.LorBBox.title}
+                                                className={className?.box}    
+                                        />
+                                    </a>
                                 </Link>
                             </ListItem>
                         )

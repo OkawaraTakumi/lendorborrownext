@@ -42,12 +42,14 @@ const { data } = await axios.post(`${process.env.NEXT_PUBLIC_POST_LOGIN_URL}`, {
      email,
      password
  })
+ console.log(data,'loginのデータです')
  if(!data.success) {
      return data.success
  }
  try{
      axios.defaults.withCredentials = true;
      const  res  = await axios.get(`${process.env.NEXT_PUBLIC_GET_CURRENT_USER_URL}`)
+     console.log(res,'getcurrentuser')
      return res.data.user
  } catch (error) {
      console.log(9)

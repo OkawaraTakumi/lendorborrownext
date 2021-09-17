@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { PropTypes,
+import { Button, PropTypes,
          Typography
          } from '@material-ui/core';
 import { Variant } from '@material-ui/core/styles/createTypography'
@@ -10,7 +10,8 @@ interface Props {
     variant:Variant
     align?:PropTypes.Alignment
     className?:string 
-    style?:object
+    style?:object,
+    href?:string,
 }
 
 const TypographyAtoms: NextPage<Props> = ({
@@ -18,17 +19,20 @@ const TypographyAtoms: NextPage<Props> = ({
     variant,
     align,
     style,
-    className
+    className,
+    href
 }) => {
     return (
-        <Typography
-            variant={variant}
-            align={align} 
-            style={style}
-            className={className}
-        >
-            {children}
-        </Typography>
+        <a href={href}>
+            <Typography
+                variant={variant}
+                align={align} 
+                style={style}
+                className={className}
+            >
+                {children}
+            </Typography>
+        </a>
     );
 };
 

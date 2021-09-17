@@ -19,7 +19,8 @@ import {
     makeStyles,
     Theme,
     Paper,
-    createStyles
+    createStyles,
+    Button
  } from "@material-ui/core";
 import Link from "next/link";
 import { ListMolecule } from "../components/molecules";
@@ -75,7 +76,7 @@ export const Home = () => {
 
 
     return (
-        <div>
+        <>
             {
                 <Container maxWidth="sm">
                         <div>     
@@ -85,13 +86,13 @@ export const Home = () => {
                                         onMaking 
                                         && (onMaking 
                                         && onMaking.count ) ?
-                                       <Link href='/approveCreate'>
-                                            <TypographyAtoms 
-                                                    variant="body1" 
-                                                    align="center" 
-                                                    className={classes.title}>
-                                                {`${onMaking?.count}件の貸し借り作成依頼があります`}
-                                            </TypographyAtoms>
+                                       <Link href='/approveCreate' passHref>
+                                                <TypographyAtoms 
+                                                        variant="body1" 
+                                                        align="center" 
+                                                        className={classes.title}>
+                                                    {`${onMaking?.count}件の貸し借り作成依頼があります`}
+                                                </TypographyAtoms>
                                         </Link>:
                                         <TypographyAtoms 
                                                 variant="body1" 
@@ -110,7 +111,7 @@ export const Home = () => {
                                         onBeingSuggested 
                                         && onBeingSuggested
                                         && Boolean(onBeingSuggested.count) ?
-                                       <Link href='/approveNegotiate'>
+                                       <Link href='/approveNegotiate' passHref>
                                             <TypographyAtoms 
                                                     variant="body1" 
                                                     align="center" 
@@ -156,7 +157,7 @@ export const Home = () => {
                             }
                 </Container>
             }
-        </div>
+        </>
         
     );
 };
