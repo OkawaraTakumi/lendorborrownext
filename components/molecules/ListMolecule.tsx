@@ -27,10 +27,6 @@ const ListModule: NextPage<Props> = ({
     root
 }) => {
 
-    useEffect(() => {
-        console.log(willShows,'コンポーネント')        
-    })
-
     return (
         <div className={className?.list}>
                 <TypographyAtoms 
