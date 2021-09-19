@@ -24,7 +24,6 @@ export const Lend :NextPage<Props>= ({
 
 export const getServerSideProps :GetServerSideProps = async (context: GetServerSidePropsContext) => {
   const { LendId } = context.query;
-  console.log(context.query)
   return { 
     props:{
       LendId

@@ -58,20 +58,20 @@ export interface resObj {
 }
 
 export interface onMaking {
-  onMaking:Array<resObj>,
-  count:number
+  onMaking:Array<resObj> | '',
+  count:number | ''
 }
 
 export interface onBeingSuggested {
-  onBeingSuggested:Array<resObj>,
-  count:number
+  onBeingSuggested:Array<resObj> | '',
+  count:number | ''
 }
 
 export interface keepLorB {
-  LKeepOn:Array<resObj>,
-  LCount:number,
-  BKeepOn:Array<resObj>,
-  BCount:number
+  LKeepOn:Array<resObj> | '',
+  LCount:number | '',
+  BKeepOn:Array<resObj> | '',
+  BCount:number | ''
 }
 
 export interface AllLorB {
@@ -217,19 +217,16 @@ const res = await axios.put(`${process.env.NEXT_PUBLIC_PUT_REJECT_CREATE}`, {
 export const getOnMaking = createAsyncThunk<onMaking, void,
 { 
   state:RootState,
-  rejectValue:ErrorResponse 
+  rejectValue:onMaking
 }>(
 'createSlice/getOnMaking',
-async () => {
+async (_, {rejectWithValue}) => {
 try {
-    console.log(process.env.NEXT_PUBLIC_GET_GET_ONMAKING)
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_GET_GET_ONMAKING}`).catch(() => {console.log('通信エラー')})
-    res && console.log(res.data.onMaking)
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_GET_GET_ONMAKING}`)
     return res && res.data.onMaking
 } catch(err) {
-  console.log('失敗')
+  return rejectWithValue({onMaking:'',count:''})
 }
-console.log(9)
 }
 )
 
@@ -237,10 +234,10 @@ console.log(9)
 export const getOnBeingSuggested = createAsyncThunk<onBeingSuggested, void,
 { 
   state:RootState,
-  rejectValue:ErrorResponse 
+  rejectValue:onBeingSuggested 
 }>(
 'createSlice/getOnBeingSuggested',
-async () => {
+async (_,{rejectWithValue}) => {
   try {
       const res = await axios.get(`${process.env.NEXT_PUBLIC_GET_GET_ONBEING_SUGGESTED}`)
       .catch(() => {console.log('通信エラー')})
@@ -249,7 +246,7 @@ async () => {
   } catch(err) {
     console.log('失敗')
   }
-  console.log(9)
+  return rejectWithValue({onBeingSuggested: '',count:''});
 }
 )
 
@@ -257,19 +254,23 @@ async () => {
 export const getLorBKeepLorB = createAsyncThunk<keepLorB, void,
 { 
   state:RootState,
-  rejectValue:ErrorResponse 
+  rejectValue:keepLorB 
 }>(
 'createSlice/getLorBKeepLorB',
-async () => {
+async (_,{rejectWithValue}) => {
   try {
       const res = await axios.get(`${process.env.NEXT_PUBLIC_GET_GET_LORB_KEEP_LORB}`)
       .catch(() => {console.log('通信エラー')})
       // res && console.log(res.data.keepLorB)
       return res &&  res.data.keepLorB
   } catch(err) {
-    console.log('失敗')
+    return rejectWithValue({
+    LKeepOn: '',
+    LCount: '',
+    BKeepOn: '',
+    BCount:''
+  });
   }
-  console.log(9)
 }
 )
 
@@ -396,12 +397,21 @@ extraReducers: (builder) => {
   .addCase(getOnMaking.fulfilled, (state, action) =>{
       state.onMaking = action.payload
   })
+  .addCase(getOnMaking.rejected, (state, action) =>{
+    state.onMaking = action.payload
+})
   .addCase(getOnBeingSuggested.fulfilled, (state, action) =>{
       state.onBeingSuggested = action.payload
   })
+  .addCase(getOnBeingSuggested.rejected, (state, action) =>{
+    state.onBeingSuggested = action.payload
+})
   .addCase(getLorBKeepLorB.fulfilled, (state, action) =>{
       state.keepLorB = action.payload
   })
+  .addCase(getLorBKeepLorB.rejected, (state, action) =>{
+    state.keepLorB = action.payload
+})
   .addCase(getAllLorB.fulfilled, (state, action) =>{
       state.AllLorB = action.payload
   })

@@ -2,7 +2,7 @@ import { createAsyncThunk,
   createSlice, 
   } from "@reduxjs/toolkit";
 import { RootState } from "../../redux-app/store";
-import axios from "axios";
+import axios, { AxiosAdapter, AxiosResponse } from "axios";
 
 
 export interface User {

@@ -66,7 +66,8 @@ export const Home = () => {
     },[dispatch])
 
     useEffect(() => {
-        console.log(Boolean(onMaking))
+        console.log(onMaking)
+        console.log(Boolean(onMaking?.onMaking))
         console.log(Array.isArray(onMaking?.onMaking))
     },[onMaking])
 
