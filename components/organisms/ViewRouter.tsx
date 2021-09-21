@@ -2,7 +2,7 @@ import { NextPage } from "next"
 import { WrapMypageUser } from "../templates"
 
 interface Props {
-  paths:string[]
+  paths:string
   followUsers:any
   followERUsers:any
 }
@@ -12,14 +12,13 @@ const ViewRouter :NextPage<Props> = ({
   followUsers,
   followERUsers
 }) => {
-  const path = paths.join("/")
-  switch (path) {
+  switch (paths) {
     case "showfollow":
       return <WrapMypageUser userInfo={followUsers} />
     case "showfollower":
       return  <WrapMypageUser userInfo={followERUsers} />
     default:
-      return null;
+      return <p>path is null</p>;
   }
 }
 

@@ -42,11 +42,13 @@ const ListModule: NextPage<Props> = ({
                     willShows.map((willShow:any, index:number) => {
                        return (
                             <ListItem key={index} className={className?.box}>
-                                <Link as={`/${root}/${index}`} href="/lend/[LendId]">
+                                <Link as={`/${root}/${index}`} href="/lend/[LendId]" passHref>
+                                    <a>
                                         <ListItemText 
                                                 primary={willShow.LorBBox.title}
                                                 className={className?.box}    
                                         />
+                                    </a>
                                 </Link>
                             </ListItem>
                         )

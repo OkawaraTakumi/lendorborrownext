@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React from "react";
 import { Button, PropTypes,
          Typography
          } from '@material-ui/core';
@@ -14,14 +14,14 @@ interface Props {
     href?:string,
 }
 
-const TypographyAtoms: NextPage<Props> = ({
+const TypographyAtoms: NextPage<Props> = React.forwardRef(({
     children,
     variant,
     align,
     style,
     className,
     href
-}) => {
+}, ref) => {
     return (
         <a href={href}>
             <Typography
@@ -34,6 +34,6 @@ const TypographyAtoms: NextPage<Props> = ({
             </Typography>
         </a>
     );
-};
+})
 
 export default  TypographyAtoms;

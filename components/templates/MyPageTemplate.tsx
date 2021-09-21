@@ -11,14 +11,15 @@ import {
  } from "../../slices/userSlice/userSlice";
 import { Container, Box } from "@material-ui/core";
 import { buttonArray } from "./ShowListOfAnyLorB"; 
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/styles";
 import { ApproveAndReject, FormBuilder } from "../molecules";
 import { propsArray } from "../molecules/FormBuilder";
 import { ViewRouter } from "../organisms";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import router, { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
+import React from 'react';
 
 const useStyles = makeStyles((thema) => ({
     button:{
@@ -53,18 +54,30 @@ interface Props {
     buttonArrays:buttonArray[]
 }
 
-const MayPageTemplate :FC<Props>= ({
+const MayPageTemplate :FC<Props>= React.forwardRef(({
     buttonArrays
-}) => {
+},ref) => {
     const user = useAppSelector(SelectUser);
     const classes = useStyles();
     const followUsers = useAppSelector(SelectFollowUser);
     const followERUsers = useAppSelector(SelectFollowERUser);
     const dispatch = useAppDispatch();
-    const route = useRouter();
+    const router = useRouter();
     const { formState:{errors} , control, getValues } = useForm<FieldValues>({
         mode:"all"
     })
+    const [changeQuery, setchangeQuery] = useState<string>('');
+
+    const handleComplete = (url: string) => {
+        console.log(router)
+    } 
+
+    useEffect(() => {
+        router.events.on("routeChangeComplete", handleComplete);
+        return () => {
+            router.events.off("routeChangeComplete", handleComplete);
+        }
+    },[router])
 
     useEffect(() => {
         dispatch(getFollow())
@@ -73,9 +86,15 @@ const MayPageTemplate :FC<Props>= ({
 
     const handleFunc = () => {
         const email = getValues();
-        console.log(email)
         dispatch(FollowUser(email));
     }
+
+    const handleRouterPush = (pathArg:string) => {
+        router.push({
+            pathname: `/mypage/${pathArg}`,
+            query: {queryFollowOrFollower:pathArg}
+        });
+    } 
 
     return (
         <>  
@@ -92,23 +111,27 @@ const MayPageTemplate :FC<Props>= ({
                                   className={classes}
                               />
                           </Box>
+
                           <Box display="flex"  className={classes.ButtonsBox}>
                               {
                                   buttonArrays 
                                   &&
                                   buttonArrays.map((property) => {
                                       return (
-                                        <Link 
-                                            href={`${property.propsPath}`} 
-                                            key={property.id}
-                                        >
+                                        // <Link 
+                                        //     href={{pathname:`${property.propsPath}`, query: {changeURL:`${property.propsPath}`}}} 
+                                        //     key={property.id}
+                                        //     passHref
+                                        // >
                                             <ApproveAndReject 
                                                     textWillShow={property.textWillShow}
                                                     className={classes.button}
                                                     color={property.color}
                                                     willDispatch={property.willDispatch}
+                                                    handleRouterPush={handleRouterPush}
+                                                    paths={property.propsPath}
                                             />
-                                        </Link>
+                                        // </Link>
                                       )
                                   })
                               }
@@ -116,7 +139,7 @@ const MayPageTemplate :FC<Props>= ({
 
                           <Box>
                               <ViewRouter 
-                                  paths={[]}
+                                  paths={''}
                                   followUsers={followUsers}
                                   followERUsers={followERUsers}
                               />
@@ -125,16 +148,16 @@ const MayPageTemplate :FC<Props>= ({
           </Container>
         </>
     )
-}
+});
 
-export const getServerSideProps :GetServerSideProps = async (req) => {
-  const query = req.query 
-
-  return {
-    props: {
-      paths: query.paths ?? []
-    }
-  }
-}
+// export const getServerSideProps :GetServerSideProps = async (req) => {
+//   const query = req.query 
+//   console.log(query);
+//   return {
+//     props: {
+//       paths: query.paths ?? []
+//     }
+//   }
+// }
 
 export default MayPageTemplate
