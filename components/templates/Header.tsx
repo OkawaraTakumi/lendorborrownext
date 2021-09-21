@@ -37,9 +37,6 @@ const Header = () => {
     const dispatch = useAppDispatch();
     const router = useRouter();
     const [open, setOpen] = useState<boolean>(false)
-    useEffect(() => {
-        console.log(user)
-    },[])
 
     const handleLogout = () => {
         dispatch(logout())
@@ -78,7 +75,7 @@ const Header = () => {
                         {
                             user.name &&
                             <BottonAtom 
-                                    onClick={() => router.push('/createLorB')} 
+                                    onClick={() => router.push('/createlorb')} 
                                     color={"primary"} 
                                     textWillShow={"貸し借り作成"}
                                     className={classes.button}

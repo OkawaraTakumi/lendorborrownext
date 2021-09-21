@@ -1,5 +1,7 @@
 import { buttonArray } from "../../components/templates/ShowListOfAnyLorB";
 import { MyPageTemplate } from "../../components/templates";
+import { GetServerSideProps, NextPage } from "next";
+import { useEffect } from "react";
 
 const buttonProps :buttonArray[]=[ 
     {
@@ -10,20 +12,36 @@ const buttonProps :buttonArray[]=[
     },
     {
         textWillShow:"フォロワー",
-        color:"primary",
+        color:"default",
         id:2,
         propsPath:'showfollower'
     }
 ]
 
-export const Mypage = () => {
+interface Props {
+    paths?: string[]
+}
+
+export const Mypage:NextPage<Props> = ({paths}) => {
     
+    useEffect(() => {
+        console.log(paths)
+    })
 
     return (
         <>
-            <MyPageTemplate buttonArrays={buttonProps}/>
+            <MyPageTemplate buttonArrays={buttonProps} paths={paths}/>
         </>
     );
 };
+
+export const getServerSideProps :GetServerSideProps = async (req) => {
+    const query = req.query 
+    return {
+      props: {
+        paths: query.slug ?? []
+      }
+    }
+  }
 
 export default Mypage;

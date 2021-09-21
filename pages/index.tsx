@@ -65,17 +65,6 @@ export const Home = () => {
         dispatch(getLorBKeepLorB())
     },[dispatch])
 
-    useEffect(() => {
-        console.log(onMaking)
-        console.log(Boolean(onMaking?.onMaking))
-        console.log(Array.isArray(onMaking?.onMaking))
-    },[onMaking])
-
-    useEffect(() => {
-        console.log(user,'Home')
-    },[user])
-
-
     return (
         <>
             {

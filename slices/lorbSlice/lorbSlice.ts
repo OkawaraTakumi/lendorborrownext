@@ -240,13 +240,10 @@ export const getOnBeingSuggested = createAsyncThunk<onBeingSuggested, void,
 async (_,{rejectWithValue}) => {
   try {
       const res = await axios.get(`${process.env.NEXT_PUBLIC_GET_GET_ONBEING_SUGGESTED}`)
-      .catch(() => {console.log('通信エラー')})
-      res && console.log(res.data.onBeingSuggested)
       return res && res.data.onBeingSuggested
   } catch(err) {
-    console.log('失敗')
+    return rejectWithValue({onBeingSuggested: '',count:''});
   }
-  return rejectWithValue({onBeingSuggested: '',count:''});
 }
 )
 

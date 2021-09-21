@@ -51,11 +51,13 @@ const propsArrayFor :propsArray[] = [
 ]
 
 interface Props {
-    buttonArrays:buttonArray[]
+    buttonArrays:buttonArray[],
+    paths?: string[]
 }
 
 const MayPageTemplate :FC<Props>= React.forwardRef(({
-    buttonArrays
+    buttonArrays,
+    paths
 },ref) => {
     const user = useAppSelector(SelectUser);
     const classes = useStyles();
@@ -67,17 +69,6 @@ const MayPageTemplate :FC<Props>= React.forwardRef(({
         mode:"all"
     })
     const [changeQuery, setchangeQuery] = useState<string>('');
-
-    const handleComplete = (url: string) => {
-        console.log(router)
-    } 
-
-    useEffect(() => {
-        router.events.on("routeChangeComplete", handleComplete);
-        return () => {
-            router.events.off("routeChangeComplete", handleComplete);
-        }
-    },[router])
 
     useEffect(() => {
         dispatch(getFollow())
@@ -91,8 +82,7 @@ const MayPageTemplate :FC<Props>= React.forwardRef(({
 
     const handleRouterPush = (pathArg:string) => {
         router.push({
-            pathname: `/mypage/${pathArg}`,
-            query: {queryFollowOrFollower:pathArg}
+            pathname: `/mypage/${pathArg}`
         });
     } 
 
@@ -116,13 +106,8 @@ const MayPageTemplate :FC<Props>= React.forwardRef(({
                               {
                                   buttonArrays 
                                   &&
-                                  buttonArrays.map((property) => {
+                                  buttonArrays.map((property,index) => {
                                       return (
-                                        // <Link 
-                                        //     href={{pathname:`${property.propsPath}`, query: {changeURL:`${property.propsPath}`}}} 
-                                        //     key={property.id}
-                                        //     passHref
-                                        // >
                                             <ApproveAndReject 
                                                     textWillShow={property.textWillShow}
                                                     className={classes.button}
@@ -130,8 +115,8 @@ const MayPageTemplate :FC<Props>= React.forwardRef(({
                                                     willDispatch={property.willDispatch}
                                                     handleRouterPush={handleRouterPush}
                                                     paths={property.propsPath}
+                                                    key={property.propsPath}
                                             />
-                                        // </Link>
                                       )
                                   })
                               }
@@ -139,7 +124,7 @@ const MayPageTemplate :FC<Props>= React.forwardRef(({
 
                           <Box>
                               <ViewRouter 
-                                  paths={''}
+                                  paths={paths? paths:[]}
                                   followUsers={followUsers}
                                   followERUsers={followERUsers}
                               />
@@ -150,14 +135,6 @@ const MayPageTemplate :FC<Props>= React.forwardRef(({
     )
 });
 
-// export const getServerSideProps :GetServerSideProps = async (req) => {
-//   const query = req.query 
-//   console.log(query);
-//   return {
-//     props: {
-//       paths: query.paths ?? []
-//     }
-//   }
-// }
+
 
 export default MayPageTemplate

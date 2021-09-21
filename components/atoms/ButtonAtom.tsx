@@ -24,7 +24,7 @@ const ButtonAtom: NextPage<Props> = ({
         <Button onClick={onClick} 
                 disabled={disabled} 
                 color={color} 
-                variant="contained"
+                variant={color === "primary"? "contained": "outlined"}
                 className={className}
                 type={type}>
                     {textWillShow}
