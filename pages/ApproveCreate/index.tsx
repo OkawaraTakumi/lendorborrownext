@@ -50,7 +50,7 @@ const ApproveCreate = () => {
     
 
     useEffect(() => {
-        if(onMaking !== undefined) {
+        if(onMaking !== undefined ) {
             setItems(onMaking.onMaking)
         }
     },[onMaking])

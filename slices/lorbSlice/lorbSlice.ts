@@ -58,7 +58,7 @@ export interface resObj {
 }
 
 export interface onMaking {
-  onMaking:Array<resObj> | '',
+  onMaking:Array<resObj> | [],
   count:number | ''
 }
 
@@ -225,7 +225,7 @@ try {
     const res = await axios.get(`${process.env.NEXT_PUBLIC_GET_GET_ONMAKING}`)
     return res && res.data.onMaking
 } catch(err) {
-  return rejectWithValue({onMaking:'',count:''})
+  return rejectWithValue({onMaking:[],count:''})
 }
 }
 )
@@ -258,7 +258,6 @@ async (_,{rejectWithValue}) => {
   try {
       const res = await axios.get(`${process.env.NEXT_PUBLIC_GET_GET_LORB_KEEP_LORB}`)
       .catch(() => {console.log('通信エラー')})
-      // res && console.log(res.data.keepLorB)
       return res &&  res.data.keepLorB
   } catch(err) {
     return rejectWithValue({

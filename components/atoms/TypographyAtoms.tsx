@@ -23,7 +23,6 @@ const TypographyAtoms: NextPage<Props> = React.forwardRef(({
     href
 }, ref) => {
     return (
-        <a href={href}>
             <Typography
                 variant={variant}
                 align={align} 
@@ -32,7 +31,6 @@ const TypographyAtoms: NextPage<Props> = React.forwardRef(({
             >
                 {children}
             </Typography>
-        </a>
     );
 })
 

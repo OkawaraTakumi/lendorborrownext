@@ -30,10 +30,6 @@ const ShowListOfAnyLorB : NextPage<Props>= ({
     buttonArray,
     reloadFunc
 }) => {
-    useEffect(() => {
-        console.log(items)
-    })
-
     return (
         <>  
             { items && (Array.isArray(items) && Boolean(items.length)) ?   

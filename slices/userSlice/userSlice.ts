@@ -9,6 +9,11 @@ name:string
 _id:string
 } 
 
+export interface SearchUser {
+  name?:string
+  _id?:string
+  } 
+
 export interface ErrorResponse {
   name:string
   _id:string
@@ -17,6 +22,7 @@ export interface ErrorResponse {
 interface UserState {
   followUser:User[],
   followERUser:User[],
+  searchUser: SearchUser,
   errorStateFollow:string,
   errorStateFollowER:string
 }
@@ -24,10 +30,36 @@ interface UserState {
 const initialState :UserState= {
   followUser:[],
   followERUser:[],
+  searchUser: {},
   errorStateFollow:'',
   errorStateFollowER:''
 } 
-  
+
+//メールアドレスからユーザーを検索
+export const findOne = createAsyncThunk<SearchUser, string,
+{ 
+  state:RootState,
+  rejectValue:SearchUser,
+  dispatch:AppDispatch 
+}>(
+'UserSlice/findOne',
+async (email,{ getState ,rejectWithValue }) => {
+
+ try{
+     axios.defaults.withCredentials = true;
+     console.log(email)
+     const  res  = await axios.get(`${process.env.NEXT_PUBLIC_GET_USER_NAME}/${email}`)
+     console.log(res)
+     if(res.data.success === false){
+      return rejectWithValue({})
+    }
+    return res.data
+    } catch (error) {
+     return rejectWithValue({})
+ }
+}
+)
+
 //ユーザーをフォロー
 export const FollowUser = createAsyncThunk<boolean, {[email:string]:string},
 { 
@@ -37,21 +69,23 @@ export const FollowUser = createAsyncThunk<boolean, {[email:string]:string},
 }>(
 'UserSlice/FollowUser',
 async (email,{ getState ,rejectWithValue }) => {
-
- try{
-     axios.defaults.withCredentials = true;
-     console.log(email)
-     const  res  = await axios.post(`${process.env.NEXT_PUBLIC_POST_FOLLOW_USER}`, email
-     )
-     if(res.data.success === false){
-      return rejectWithValue('取得に失敗しました')
-     }
-     return res.data.success
- } catch (error) {
-     return rejectWithValue('取得に失敗しました')
- }
-}
-)
+  console.log(getState().user.searchUser.name)
+  if(window.confirm(`${getState().user.searchUser.name}をフォローします。`)){
+      try{
+          axios.defaults.withCredentials = true;
+          console.log(email)
+          const  res  = await axios.post(`${process.env.NEXT_PUBLIC_POST_FOLLOW_USER}`, email
+          )
+          if(res.data.success === false){
+          return rejectWithValue('取得に失敗しました')
+          }
+          return res.data.success
+      } catch (error) {
+          return rejectWithValue('取得に失敗しました')
+      }
+    }
+    return rejectWithValue('取得に失敗しました')
+})
 
 //フォローしているユーザーの情報を取得
 export const getFollow = createAsyncThunk<User[], void,
@@ -63,7 +97,6 @@ async (_,{ rejectWithValue }) => {
  try{
      axios.defaults.withCredentials = true;
      const  res  = await axios.get(`${process.env.NEXT_PUBLIC_GET_FOLLOW}`)
-     console.log(res,'フォローデータ')
      if(res.data.success === false) {
       return rejectWithValue('取得に失敗しました')
      }
@@ -85,7 +118,6 @@ async (_,{ getState ,rejectWithValue }) => {
  try{
      axios.defaults.withCredentials = true;
      const  res  = await axios.get(`${process.env.NEXT_PUBLIC_GET_GET_FOLOWER}`)
-     console.log(res,'フォロワーデータ')
      return res.data.followerData
  } catch (error) {
      return rejectWithValue('取得に失敗しました')
@@ -103,8 +135,15 @@ reducers:{
 },
 extraReducers: (builder) => {
  builder
+ .addCase(findOne.fulfilled,(state, action) => {
+  state.searchUser = action.payload
+})
+.addCase(findOne.rejected,(state, action) => {
+  if(action.payload !== undefined){    
+    state.searchUser = action.payload
+}
+})
  .addCase(getFollow.fulfilled,(state, action) => {
-     console.log(action)
      state.followUser = action.payload
  })
  .addCase(getFollow.rejected, (state, action) => {
@@ -125,6 +164,7 @@ extraReducers: (builder) => {
 
 
 export const SelectFollowUser = (state:RootState) => state.user.followUser
-export const SelectFollowERUser = (state:RootState) => state.user.followERUser 
+export const SelectFollowERUser = (state:RootState) => state.user.followERUser
+export const SelectorSearchUser = (state:RootState) => state.user.searchUser 
 
 export default userSlice.reducer;

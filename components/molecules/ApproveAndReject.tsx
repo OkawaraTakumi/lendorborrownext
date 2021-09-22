@@ -41,8 +41,6 @@ const ApproveAndReject: NextPage<Props> = React.forwardRef(({
                 userFrom:item.userFrom,
                 id:item.LorBBox._id
             }
-            console.log(willDispatch)
-            console.log(payload)
             dispatch(willDispatch(payload)).then(() => {
                 dispatch(reloadFunc())
             })

@@ -2,7 +2,6 @@ import { CacheProvider, EmotionCache } from "@emotion/react";
 import { CssBaseline } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import { AppProps } from "next/app";
-import Head from "next/head";
 import * as React from "react";
 import { Provider } from "react-redux";
 import Header from "../components/templates/Header";

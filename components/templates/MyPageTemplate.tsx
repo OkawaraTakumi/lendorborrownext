@@ -1,13 +1,15 @@
 import { MypageUser } from "../organisms";
 import { useAppSelector, useAppDispatch } from "../../redux-app/hooks";
-import { SelectUser } from "../../slices/loginSlice/loginSlice";
+import { fetchUser, SelectUser } from "../../slices/loginSlice/loginSlice";
 import { useForm, FieldValues } from "react-hook-form";
 import { 
     SelectFollowUser,
     SelectFollowERUser,
     getFollow,
     getFollower,
-    FollowUser
+    FollowUser,
+    findOne,
+    SelectorSearchUser
  } from "../../slices/userSlice/userSlice";
 import { Container, Box } from "@material-ui/core";
 import { buttonArray } from "./ShowListOfAnyLorB"; 
@@ -65,19 +67,27 @@ const MayPageTemplate :FC<Props>= React.forwardRef(({
     const followERUsers = useAppSelector(SelectFollowERUser);
     const dispatch = useAppDispatch();
     const router = useRouter();
-    const { formState:{errors} , control, getValues } = useForm<FieldValues>({
+    const { formState:{errors} , 
+            control, 
+            getValues,
+            handleSubmit,
+            reset } = useForm<FieldValues>({
         mode:"all"
     })
+    const onSubmit = (data: FieldValues, e:any) => {};
     const [changeQuery, setchangeQuery] = useState<string>('');
-
     useEffect(() => {
+        dispatch(fetchUser())
         dispatch(getFollow())
         dispatch(getFollower())
     },[dispatch])
 
-    const handleFunc = () => {
+    const  handleFunc = async () => {
         const email = getValues();
-        dispatch(FollowUser(email));
+        await dispatch(findOne(email.email))
+        await dispatch(FollowUser(email));
+        await dispatch(getFollow())
+        reset({email:''})
     }
 
     const handleRouterPush = (pathArg:string) => {
@@ -99,6 +109,9 @@ const MayPageTemplate :FC<Props>= React.forwardRef(({
                                   errors={errors}
                                   handleFunc={handleFunc}
                                   className={classes}
+                                  type="submit"
+                                  onSubmit={onSubmit}
+                                  handleSubmit={handleSubmit}
                               />
                           </Box>
 

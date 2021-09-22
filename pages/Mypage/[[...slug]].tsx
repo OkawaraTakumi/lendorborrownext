@@ -23,11 +23,6 @@ interface Props {
 }
 
 export const Mypage:NextPage<Props> = ({paths}) => {
-    
-    useEffect(() => {
-        console.log(paths)
-    })
-
     return (
         <>
             <MyPageTemplate buttonArrays={buttonProps} paths={paths}/>

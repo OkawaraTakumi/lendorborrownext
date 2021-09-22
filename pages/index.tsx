@@ -76,13 +76,15 @@ export const Home = () => {
                                         onMaking 
                                         && (onMaking 
                                         && onMaking.count ) ?
-                                       <Link href='/approveCreate' passHref>
+                                       <Link href='/approvecreate' passHref>
+                                           <a>
                                                 <TypographyAtoms 
                                                         variant="body1" 
                                                         align="center" 
                                                         className={classes.title}>
                                                     {`${onMaking?.count}件の貸し借り作成依頼があります`}
                                                 </TypographyAtoms>
+                                           </a>
                                         </Link>:
                                         <TypographyAtoms 
                                                 variant="body1" 
@@ -101,13 +103,15 @@ export const Home = () => {
                                         onBeingSuggested 
                                         && onBeingSuggested
                                         && Boolean(onBeingSuggested.count) ?
-                                       <Link href='/approveNegotiate' passHref>
-                                            <TypographyAtoms 
-                                                    variant="body1" 
-                                                    align="center" 
-                                                    className={classes.title}>
-                                                {`${onBeingSuggested?.count}件の貸し借り解消依頼があります`}
-                                            </TypographyAtoms>
+                                       <Link href='/approvenegotiate' passHref>
+                                           <a>
+                                                <TypographyAtoms 
+                                                        variant="body1" 
+                                                        align="center" 
+                                                        className={classes.title}>
+                                                    {`${onBeingSuggested?.count}件の貸し借り解消依頼があります`}
+                                                </TypographyAtoms>
+                                           </a>
                                         </Link>:
                                         <TypographyAtoms 
                                                 variant="body1" 
