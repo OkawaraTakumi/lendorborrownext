@@ -80,7 +80,7 @@ async (email,{ getState ,rejectWithValue }) => {
           return rejectWithValue('取得に失敗しました')
           }
           return res.data.success
-      } catch (error) {
+      } catch (err:any) {
           return rejectWithValue('取得に失敗しました')
       }
     }

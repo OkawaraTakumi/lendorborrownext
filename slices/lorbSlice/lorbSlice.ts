@@ -69,9 +69,9 @@ export interface onBeingSuggested {
 
 export interface keepLorB {
   LKeepOn:Array<resObj> | [],
-  LCount:number | '',
+  LCount:number,
   BKeepOn:Array<resObj> | [],
-  BCount:number | ''
+  BCount:number
 }
 
 export interface AllLorB {
@@ -261,9 +261,9 @@ async (_,{rejectWithValue}) => {
   } catch(err) {
     return rejectWithValue({
     LKeepOn: [],
-    LCount: '',
+    LCount: 0,
     BKeepOn: [],
-    BCount:''
+    BCount:0
   });
   }
 }

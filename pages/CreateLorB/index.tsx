@@ -54,7 +54,9 @@ const CreateLorB = () => {
 
   useEffect(() => {
       if(user && Array.isArray(followUser)){
-          const newUserArray = [user];
+          const newUser = {...user};
+          newUser.name = '自分'
+          const newUserArray = [newUser];
           const newFollowArray = newUserArray.concat(followUser)
           setselectItemsFollow(newFollowArray)
       }
@@ -72,7 +74,6 @@ const CreateLorB = () => {
       if(userFrom === userTo){
           dispatch(setError({success:'貸し人と借り人は一致することはありません'}))
       }else {
-          console.log(1)
           if(userFrom === user._id) {
               userForApprove = userFrom;
               userFromName = user.name;
@@ -80,20 +81,14 @@ const CreateLorB = () => {
                   return user._id === String(userTo)
               })?.name
               userToNamePrepare && (userToName = userToNamePrepare)
-              console.log(userToName,'To')
           } else if (userTo === user._id) {
-              console.log(2)
               userForApprove = userTo;
               userToName = user.name;
               const userFromNamePrepare = followUser.find((user:any) => {
                   return user._id === String(userFrom)
               })?.name
-              console.log(userFromNamePrepare,'準備')
               userFromNamePrepare && (userFromName = userFromNamePrepare)
-              console.log(userFromName,'From')
           }
-          console.log(userFromName,'From')
-          console.log(userToName,'To')
           await dispatch(createLorB({
               title,
               detailClass:select,

@@ -41,9 +41,9 @@ const SelectAtom: NextPage<Props> = ({
                             {...field}
                     >
                         {
-                            selectItems.map((item) => {
+                            selectItems.map((item, index) => {
                                 return (
-                                    <MenuItem  value={item._id} key={item._id}>{item.name}</MenuItem>
+                                    <MenuItem  value={item._id} key={index}>{item.name}</MenuItem>
                                 )
                             })
                         }
