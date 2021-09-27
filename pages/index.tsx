@@ -68,6 +68,7 @@ export const Home = () => {
     return (
         <>
             {
+                user._id ?
                 <Container maxWidth="sm">
                         <div>     
                             <div className={classes.list}>
@@ -150,6 +151,7 @@ export const Home = () => {
                                 )
                             }
                 </Container>
+                :<TypographyAtoms variant="body1" align="center">ログインしてください</TypographyAtoms>
             }
         </>
         

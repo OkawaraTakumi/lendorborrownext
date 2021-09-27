@@ -8,7 +8,8 @@ import { useAppDispatch, useAppSelector } from '../../redux-app/hooks';
 import { 
   loginAndFetchUser, 
   SelectUser,
-  fetchUser
+  fetchUser,
+  SelectSuccess
 } from '../../slices/loginSlice/loginSlice';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -38,9 +39,9 @@ const Login = () => {
   const router = useRouter();
   const [errorState, setErrorState] = useState<string>('')
   const user = useAppSelector(SelectUser)
+  const success = useAppSelector(SelectSuccess)
   useEffect(() => {
       dispatch(fetchUser())
-      console.log(9)
   },[dispatch])
   useEffect(() => {
       if(user._id){
@@ -55,16 +56,15 @@ const Login = () => {
       const { email, password} = getValues() 
       dispatch(loginAndFetchUser({email, password}))
       .then(() => {
-          console.log(user)
           user._id && router.push('/')
         })
-      .catch(() => setErrorState('ログインに失敗しました'))
+    //   .catch(() => setErrorState('ログインに失敗しました'))
   }
 
 
   return (
       <>
-          <p>{errorState}</p>
+          {!success && <p>ログインに失敗しました</p>}
           <FormBuilder propsArray={propsArray} 
                        control={control} 
                        errors={errors} 

@@ -12,6 +12,7 @@ _id:string
 
 export interface Login {
 user:User
+success?:boolean
 } 
 
 export interface ErrorResponse {
@@ -27,32 +28,35 @@ const initialState:Login = {
 user:{
  name:'',
  _id:''
-}
+},
+success:true
 }
 
 //ログイン処理しユーザーデータを取得
 export const loginAndFetchUser = createAsyncThunk<User, loginAction,
 { state:RootState,
-rejectValue:ErrorResponse 
+rejectValue:ErrorResponse
 }>(
 'loginSlice/loginAndFetchUser',
 async ({email, password},{ getState ,rejectWithValue }) => {
-console.log(process.env.NEXT_PUBLIC_POST_LOGIN_URL)
-const { data } = await axios.post(`${process.env.NEXT_PUBLIC_POST_LOGIN_URL}`, {
-     email,
-     password
- })
- console.log(data,'loginのデータです')
- if(!data.success) {
-     return data.success
- }
+try {
+    const { data } = await axios.post(`${process.env.NEXT_PUBLIC_POST_LOGIN_URL}`, {
+         email,
+         password
+     })
+     if(!data.success) {
+        return rejectWithValue({success: false}) 
+    }
+} catch (err) {
+    console.log('ログイン失敗')
+    return rejectWithValue({success: false}) 
+}
  try{
      axios.defaults.withCredentials = true;
      const  res  = await axios.get(`${process.env.NEXT_PUBLIC_GET_CURRENT_USER_URL}`)
-     console.log(res,'getcurrentuser')
      return res.data.user
  } catch (error) {
-     console.log(9)
+    return rejectWithValue({success: false})
  }
 }
 )
@@ -83,7 +87,6 @@ name:'login',
 initialState,
 reducers:{
  logout:(state) => {
-     console.log(state)
      state.user = {name:'',_id:''}
  }
 },
@@ -92,7 +95,11 @@ extraReducers: (builder) => {
  .addCase(loginAndFetchUser.fulfilled,(state, action) => {
      state.user = action.payload
  })
-
+ .addCase(loginAndFetchUser.rejected,(state, action) => {
+    if(action.payload !== undefined){
+        state.success = action.payload.success    
+    }
+})
  builder
  .addCase(fetchUser.fulfilled, (state, action) => {
      const { name, _id } = action.payload
@@ -108,5 +115,5 @@ extraReducers: (builder) => {
 
 export const { logout } = loginSlice.actions;
 export const SelectUser = (state:RootState) => state.login.user 
-
+export const SelectSuccess = (state:RootState) => state.login.success
 export default loginSlice.reducer;
