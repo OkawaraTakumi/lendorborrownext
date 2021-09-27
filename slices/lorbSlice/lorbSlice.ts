@@ -68,9 +68,9 @@ export interface onBeingSuggested {
 }
 
 export interface keepLorB {
-  LKeepOn:Array<resObj> | '',
+  LKeepOn:Array<resObj> | [],
   LCount:number | '',
-  BKeepOn:Array<resObj> | '',
+  BKeepOn:Array<resObj> | [],
   BCount:number | ''
 }
 
@@ -257,13 +257,12 @@ export const getLorBKeepLorB = createAsyncThunk<keepLorB, void,
 async (_,{rejectWithValue}) => {
   try {
       const res = await axios.get(`${process.env.NEXT_PUBLIC_GET_GET_LORB_KEEP_LORB}`)
-      .catch(() => {console.log('通信エラー')})
       return res &&  res.data.keepLorB
   } catch(err) {
     return rejectWithValue({
-    LKeepOn: '',
+    LKeepOn: [],
     LCount: '',
-    BKeepOn: '',
+    BKeepOn: [],
     BCount:''
   });
   }
