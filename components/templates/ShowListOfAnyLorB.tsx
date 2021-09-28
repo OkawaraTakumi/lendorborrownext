@@ -1,12 +1,11 @@
 import { FC } from "react";
-import { 
-    Container,
-    Box        
-} from "@material-ui/core";
+import Container from '@material-ui/core/Container'
+import Box from '@material-ui/core/Box'
 import { ApproveAndReject } from "../molecules";
 import { OneDataDisplay } from '../molecules'
 import { resObj } from "../../slices/lorbSlice/lorbSlice";
 import { useEffect } from "react";
+import { NextPage } from "next";
 
 export interface buttonArray {
     textWillShow:string
@@ -24,17 +23,13 @@ interface Props {
     reloadFunc?:any
 }
 
-const ShowListOfAnyLorB : FC<Props>= ({
+const ShowListOfAnyLorB : NextPage<Props>= ({
     children,
     classes,
     items,
     buttonArray,
     reloadFunc
 }) => {
-    useEffect(() => {
-        console.log(items)
-    })
-
     return (
         <>  
             { items && (Array.isArray(items) && Boolean(items.length)) ?   

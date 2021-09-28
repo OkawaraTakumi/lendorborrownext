@@ -10,8 +10,8 @@ import { Menu } from "@material-ui/icons";
 import  Link from "next/link";
 import { useRouter } from "next/router";
 import { useAppSelector, useAppDispatch } from "../../redux-app/hooks";
-import { SelectUser, logout } from "../../slices/loginSlice/loginSlice";
-import { useState } from "react";
+import { SelectUser, fetchUser, logout} from "../../slices/loginSlice/loginSlice";
+import { useEffect, useState } from "react";
 import SideNav from "../organisms/SideNav";
 
 
@@ -38,6 +38,10 @@ const Header = () => {
     const router = useRouter();
     const [open, setOpen] = useState<boolean>(false)
 
+    useEffect(() => {
+        dispatch(fetchUser())
+    }, [])
+
     const handleLogout = () => {
         dispatch(logout())
         router.push('/')
@@ -48,9 +52,7 @@ const Header = () => {
             return !prevState
         })
     }
-    
-
-                    
+                        
     return (
         <div className={classes.root}>
             <CssBaseline/>
@@ -77,7 +79,7 @@ const Header = () => {
                         {
                             user.name &&
                             <BottonAtom 
-                                    onClick={() => router.push('/createLorB')} 
+                                    onClick={() => router.push('/createlorb')} 
                                     color={"primary"} 
                                     textWillShow={"貸し借り作成"}
                                     className={classes.button}
@@ -112,7 +114,7 @@ const Header = () => {
                         }
                 </Toolbar>
             </AppBar>
-            <SideNav handleFrag={handleFlag} open={open}/>
+            { user.name && <SideNav handleFrag={handleFlag} open={open}/> }
         </div>
     )
 }

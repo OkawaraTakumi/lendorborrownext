@@ -25,12 +25,14 @@ const ListAtom :ListComponent= ({
           {
               ListChild.map((item, index) => (
                   <Link href="/mypage" key={index}>
-                      <ListItem>
-                          <ListItemIcon>
-                              { index === 0 && <AccountCircle/> }
-                          </ListItemIcon>
-                          <ListItemText primary={item}/>
-                      </ListItem>
+                    <a style={{"textDecoration":"none"}}>
+                        <ListItem>
+                            <ListItemIcon>
+                                { index === 0 && <AccountCircle/> }
+                            </ListItemIcon>
+                            <ListItemText primary={item}/>
+                        </ListItem>
+                    </a>
                   </Link>
               ))
           }

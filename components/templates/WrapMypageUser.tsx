@@ -13,9 +13,7 @@ interface Props {
 
 const useStyles = makeStyles((thema) => ({
     SwitchBox:{
-        border:"3px solid #3366CC",
         width:'40%',
-        borderRadius:'5px'
     }
 }))
 

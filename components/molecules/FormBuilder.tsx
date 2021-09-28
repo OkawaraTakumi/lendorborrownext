@@ -22,10 +22,13 @@ interface Props {
     control:Control,
     errors:FieldErrors,
     handleFunc:(...handleArgs:any[]) => void,
+    onSubmit?:(...handleArgs:any[]) => any,
+    handleSubmit?:(...handleArgs:any[]) => any
     textWillShow:string,
     className?:{
         [propsClass:string]:string
     }
+    type?: "button" | "reset" | "submit"
 }
 
 
@@ -34,15 +37,18 @@ const FormBuilder:NextPage<Props> = ({
     control,
     errors,
     handleFunc,
+    onSubmit,
+    handleSubmit,
     textWillShow,
-    className
+    className,
+    type
 }) => {
 
     
 
     return (
         <>
-            <form>
+            <form onSubmit={handleSubmit && handleSubmit(onSubmit)}>
                 {
                     propsArray.map((props, index) => (
                         <TextFieldAtom 
@@ -56,7 +62,10 @@ const FormBuilder:NextPage<Props> = ({
                     ))
                 }       
                     <Box className={className?.Box}>
-                        <BottonAtom onClick={() => handleFunc()} color={"primary"} textWillShow={textWillShow} />      
+                        <BottonAtom 
+                            onClick={() => handleFunc()} 
+                            color={"primary"} 
+                            textWillShow={textWillShow} />      
                     </Box>
             </form>
         </>

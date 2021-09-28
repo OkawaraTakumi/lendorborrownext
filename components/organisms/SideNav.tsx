@@ -25,6 +25,7 @@ const user = useAppSelector(SelectUser);
 
 return (
  <>
+     {user.name &&
      <Drawer
          variant="persistent"
          anchor="left"
@@ -40,8 +41,7 @@ return (
          <ListAtom ListChild={[user.name]}/>
 
      </Drawer>
-
-
+     }
  </>
 )
 }

@@ -58,19 +58,19 @@ export interface resObj {
 }
 
 export interface onMaking {
-  onMaking:Array<resObj>,
-  count:number
+  onMaking:Array<resObj> | [],
+  count:number | ''
 }
 
 export interface onBeingSuggested {
-  onBeingSuggested:Array<resObj>,
-  count:number
+  onBeingSuggested:Array<resObj> | '',
+  count:number | ''
 }
 
 export interface keepLorB {
-  LKeepOn:Array<resObj>,
+  LKeepOn:Array<resObj> | [],
   LCount:number,
-  BKeepOn:Array<resObj>,
+  BKeepOn:Array<resObj> | [],
   BCount:number
 }
 
@@ -122,7 +122,8 @@ async ({title,
       userForApprove},
       { getState ,rejectWithValue }) => {
  try {
-     const res = await axios.post(`${process.env.POST_CREATE_LORB}`, {
+  process.env.NEXT_PUBLIC_POST_CREATE_LORB
+     const res = await axios.post(`${process.env.NEXT_PUBLIC_POST_CREATE_LORB}`, {
        title,
        detailClass,
        aboutDetail,
@@ -155,7 +156,7 @@ async ({
       userForApprove
       },
       { getState ,rejectWithValue }) => {
-const res = await axios.post(`${process.env.POST_UPDATE_LORB_DETAIL}`, {
+const res = await axios.post(`${process.env.NEXT_PUBLIC_POST_UPDATE_LORB_DETAIL}`, {
   title,
   detailClass,
   aboutDetail,
@@ -181,7 +182,7 @@ async (
           id        
       },
       { getState ,rejectWithValue }) => {
-const res = await axios.put(`${process.env.PUT_APPROVE_CREATE}`, {
+const res = await axios.put(`${process.env.NEXT_PUBLIC_PUT_APPROVE_CREATE}`, {
   userTo,
   userFrom,
   id
@@ -203,7 +204,7 @@ async ({
           id        
       },
       { getState ,rejectWithValue }) => {
-const res = await axios.put(`${process.env.PUT_REJECT_CREATE}`, {
+const res = await axios.put(`${process.env.NEXT_PUBLIC_PUT_REJECT_CREATE}`, {
   userTo,
   userFrom,
   id
@@ -216,18 +217,16 @@ const res = await axios.put(`${process.env.PUT_REJECT_CREATE}`, {
 export const getOnMaking = createAsyncThunk<onMaking, void,
 { 
   state:RootState,
-  rejectValue:ErrorResponse 
+  rejectValue:onMaking
 }>(
 'createSlice/getOnMaking',
-async () => {
+async (_, {rejectWithValue}) => {
 try {
-    const res = await axios.get(`${process.env.GET_GET_ONMAKING}`).catch(() => {console.log('通信エラー')})
-    res && console.log(res.data.onMaking)
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_GET_GET_ONMAKING}`)
     return res && res.data.onMaking
 } catch(err) {
-  console.log('失敗')
+  return rejectWithValue({onMaking:[],count:''})
 }
-console.log(9)
 }
 )
 
@@ -235,19 +234,16 @@ console.log(9)
 export const getOnBeingSuggested = createAsyncThunk<onBeingSuggested, void,
 { 
   state:RootState,
-  rejectValue:ErrorResponse 
+  rejectValue:onBeingSuggested 
 }>(
 'createSlice/getOnBeingSuggested',
-async () => {
+async (_,{rejectWithValue}) => {
   try {
-      const res = await axios.get(`${process.env.GET_GET_ONBEING_SUGGESTED}`)
-      .catch(() => {console.log('通信エラー')})
-      res && console.log(res.data.onBeingSuggested)
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_GET_GET_ONBEING_SUGGESTED}`)
       return res && res.data.onBeingSuggested
   } catch(err) {
-    console.log('失敗')
+    return rejectWithValue({onBeingSuggested: '',count:''});
   }
-  console.log(9)
 }
 )
 
@@ -255,19 +251,21 @@ async () => {
 export const getLorBKeepLorB = createAsyncThunk<keepLorB, void,
 { 
   state:RootState,
-  rejectValue:ErrorResponse 
+  rejectValue:keepLorB 
 }>(
 'createSlice/getLorBKeepLorB',
-async () => {
+async (_,{rejectWithValue}) => {
   try {
-      const res = await axios.get(`${process.env.GET_GET_LORB_KEEP_LORB}`)
-      .catch(() => {console.log('通信エラー')})
-      // res && console.log(res.data.keepLorB)
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_GET_GET_LORB_KEEP_LORB}`)
       return res &&  res.data.keepLorB
   } catch(err) {
-    console.log('失敗')
+    return rejectWithValue({
+    LKeepOn: [],
+    LCount: 0,
+    BKeepOn: [],
+    BCount:0
+  });
   }
-  console.log(9)
 }
 )
 
@@ -279,7 +277,7 @@ export const getAllLorB = createAsyncThunk<AllLorB, void,
 }>(
 'createSlice/getAllLorB',
 async () => {
-const res = await axios.get(`${process.env.GET_GET_ALL_LORB}`)
+const res = await axios.get(`${process.env.NEXT_PUBLIC_GET_GET_ALL_LORB}`)
  return res.data
 }
 )
@@ -292,7 +290,7 @@ export const getLorBIhave = createAsyncThunk<AllLorBIhave, void,
 }>(
 'createSlice/getLorBIhave',
 async () => {
-const res = await axios.get(`${process.env.GET_GET_LORB_IHAVE}`)
+const res = await axios.get(`${process.env.NEXT_PUBLIC_GET_GET_LORB_IHAVE}`)
  return res.data
 }
 )
@@ -306,7 +304,7 @@ export const getLorBCompleted = createAsyncThunk<Completed, void,
 }>(
 'createSlice/getLorBCompleted',
 async () => {
-const res = await axios.get(`${process.env.GET_LORB_COMPLETED}`)
+const res = await axios.get(`${process.env.NEXT_PUBLIC_GET_LORB_COMPLETED}`)
  return res.data
 }
 )
@@ -325,7 +323,7 @@ async ({
   negotiateDetail,
   id
 }) => {
-const res = await axios.put(`${process.env.PUT_UPDATE_NEGOTIATE}`,{ 
+const res = await axios.put(`${process.env.NEXT_PUBLIC_PUT_UPDATE_NEGOTIATE}`,{ 
   userFrom,
   userTo,
   negotiateItem,
@@ -350,7 +348,7 @@ async ({
       },
       { getState ,rejectWithValue }) => {
 console.log('RejectNegotiateが呼び出されました')
-const res = await axios.put(`${process.env.PUT_REJECT_NEGOTIATE}`, {
+const res = await axios.put(`${process.env.NEXT_PUBLIC_PUT_REJECT_NEGOTIATE}`, {
   userTo,
   userFrom,
   id
@@ -371,7 +369,7 @@ async ({
   userFrom,
   id
 }) => {
-const res = await axios.put(`${process.env.PUT_DELETE_LORB_TABLE}`,{
+const res = await axios.put(`${process.env.NEXT_PUBLIC_PUT_DELETE_LORB_TABLE}`,{
   userTo,
   userFrom,
   id
@@ -394,12 +392,21 @@ extraReducers: (builder) => {
   .addCase(getOnMaking.fulfilled, (state, action) =>{
       state.onMaking = action.payload
   })
+  .addCase(getOnMaking.rejected, (state, action) =>{
+    state.onMaking = action.payload
+})
   .addCase(getOnBeingSuggested.fulfilled, (state, action) =>{
       state.onBeingSuggested = action.payload
   })
+  .addCase(getOnBeingSuggested.rejected, (state, action) =>{
+    state.onBeingSuggested = action.payload
+})
   .addCase(getLorBKeepLorB.fulfilled, (state, action) =>{
       state.keepLorB = action.payload
   })
+  .addCase(getLorBKeepLorB.rejected, (state, action) =>{
+    state.keepLorB = action.payload
+})
   .addCase(getAllLorB.fulfilled, (state, action) =>{
       state.AllLorB = action.payload
   })

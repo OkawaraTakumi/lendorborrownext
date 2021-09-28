@@ -27,10 +27,6 @@ const ListModule: NextPage<Props> = ({
     root
 }) => {
 
-    useEffect(() => {
-        console.log(willShows,'コンポーネント')        
-    })
-
     return (
         <div className={className?.list}>
                 <TypographyAtoms 
@@ -46,11 +42,13 @@ const ListModule: NextPage<Props> = ({
                     willShows.map((willShow:any, index:number) => {
                        return (
                             <ListItem key={index} className={className?.box}>
-                                <Link href={`/${root}/${index}`}>
-                                    <ListItemText 
-                                            primary={willShow.LorBBox.title}
-                                            className={className?.box}    
-                                    />
+                                <Link as={`/${root}/${index}`} href="/lend/[LendId]" passHref>
+                                    <a>
+                                        <ListItemText 
+                                                primary={willShow.LorBBox.title}
+                                                className={className?.box}    
+                                        />
+                                    </a>
                                 </Link>
                             </ListItem>
                         )
