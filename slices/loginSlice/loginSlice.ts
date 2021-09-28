@@ -72,11 +72,29 @@ async (_,{ rejectWithValue }) => {
      axios.defaults.withCredentials = true;
      const  res  = await axios.get(`${process.env.NEXT_PUBLIC_GET_CURRENT_USER_URL}`)
      if(res.data.success === false) {
-         return {name:'',id:''}
+         return {name:'', _id:''}
      }
      return res.data.user
  } catch (error) {
      return rejectWithValue({name:'',_id:''})
+ }
+}
+)
+
+export const logout = createAsyncThunk<User , void,
+{ 
+  state:RootState,
+  rejectValue:void 
+}>(
+'loginSlice/logout',
+async (_,{ rejectWithValue }) => {
+ try{
+     axios.defaults.withCredentials = true;
+     const  res  = await axios.post(`${process.env.NEXT_PUBLIC_POST_LOGOUT_URL}`)
+         return { name:'', _id:''}
+ } catch (error) {
+    console.log(9)
+    return  rejectWithValue()
  }
 }
 )
@@ -86,9 +104,9 @@ export const loginSlice = createSlice({
 name:'login',
 initialState,
 reducers:{
- logout:(state) => {
-     state.user = {name:'',_id:''}
- }
+//  logout:(state) => {
+//      state.user = {name:'',_id:''}
+//  }
 },
 extraReducers: (builder) => {
  builder
@@ -110,10 +128,15 @@ extraReducers: (builder) => {
          state.user = action.payload    
      }
  })
+ builder
+ .addCase(logout.fulfilled, (state, action) => {
+     const { name, _id } = action.payload
+     state.user = {name, _id}
+ })
 }
 })
 
-export const { logout } = loginSlice.actions;
+// export const { logout } = loginSlice.actions;
 export const SelectUser = (state:RootState) => state.login.user 
 export const SelectSuccess = (state:RootState) => state.login.success
 export default loginSlice.reducer;

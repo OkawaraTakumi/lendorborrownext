@@ -10,7 +10,7 @@ import { Menu } from "@material-ui/icons";
 import  Link from "next/link";
 import { useRouter } from "next/router";
 import { useAppSelector, useAppDispatch } from "../../redux-app/hooks";
-import { SelectUser, fetchUser, logout } from "../../slices/loginSlice/loginSlice";
+import { SelectUser, fetchUser, logout} from "../../slices/loginSlice/loginSlice";
 import { useEffect, useState } from "react";
 import SideNav from "../organisms/SideNav";
 
