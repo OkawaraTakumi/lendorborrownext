@@ -1,0 +1,46 @@
+
+; NEXT_PUBLIC_POST_REGIST_URL = http://localhost:5000/auth/register
+; //ログイン処理を行う場合のURL
+; NEXT_PUBLIC_POST_LOGIN_URL = http://localhost:5000/auth/login
+; //ログアウト処理を行う場合のURL
+; NEXT_PUBLIC_POST_LOGOUT_URL = http://localhost:5000/auth/logout
+; //ログインユーザーの情報取得時のURL
+; NEXT_PUBLIC_GET_CURRENT_USER_URL = http://localhost:5000/auth/getCurrentUser
+
+
+; //LorB
+; //貸し借りテーブルを作成
+; NEXT_PUBLIC_POST_CREATE_LORB = http://localhost:5000/LorB/createLorB
+; //貸し借りテーブルに貸し借りを追加
+; NEXT_PUBLIC_POST_UPDATE_LORB_DETAIL = http://localhost:5000/LorB/updateLorBDetail
+; //貸し借りテーブルの作成、追加の承認
+; NEXT_PUBLIC_PUT_APPROVE_CREATE = http://localhost:5000/LorB/approveCreate
+; //貸し借りテーブルの作成追加の拒否
+; NEXT_PUBLIC_PUT_REJECT_CREATE = http://localhost:5000/LorB/rejectCreate
+; //作成中の貸し借りテーブルの取得
+; NEXT_PUBLIC_GET_GET_ONMAKING = http://localhost:5000/LorB/getOnMaking
+; //交渉中の貸し借りテーブルの取得
+; NEXT_PUBLIC_GET_GET_ONBEING_SUGGESTED = http://localhost:5000/LorB/getOnBeingSuggested
+; //任意の相手との貸し借りテーブルの取得
+; NEXT_PUBLIC_GET_GET_LORB = http://localhost:5000/LorB/getLorB
+; //所持している全ての貸し借りテーブルを取得
+; NEXT_PUBLIC_GET_GET_LORB_KEEP_LORB = http://localhost:5000/LorB/getLorBKeepLorB
+; //自分に関わらず存在している全ての貸し借りデータを全て取得
+; NEXT_PUBLIC_GET_GET_ALL_LORB = http://localhost:5000/LorB/getAllLorB
+; //状態に関わらず所持している全ての貸し借りを取得
+; NEXT_PUBLIC_GET_GET_LORB_IHAVE = http://localhost:5000/LorB/getLorBKeepLorB
+; //解消済みの貸し借りデータを取得
+; NEXT_PUBLIC_GET_LORB_COMPLETED = http://localhost:5000/LorB/getLorBCompleted
+; //交渉の内容を設定または更新
+; NEXT_PUBLIC_PUT_UPDATE_NEGOTIATE = http://localhost:5000/LorB/updateNegotiate
+; //交渉を承認
+; NEXT_PUBLIC_PUT_REJECT_NEGOTIATE = http://localhost:5000/LorB/rejectNegotiate
+; //任意の貸し借りデータを論理削除,削除と書いてあるがstateを更新するだけなのでPUTで良い
+; NEXT_PUBLIC_PUT_DELETE_LORB_TABLE = http://localhost:5000/LorB/deleteLorBtable
+
+; //User
+; NEXT_PUBLIC_EDIT_USER =http://localhost:5000/user/edit
+; NEXT_PUBLIC_GET_USER_NAME =http://localhost:5000/user/getUserName
+; NEXT_PUBLIC_GET_FOLLOW = http://localhost:5000/user/getFollow
+; NEXT_PUBLIC_POST_FOLLOW_USER = http://localhost:5000/user/followUser
+; NEXT_PUBLIC_GET_GET_FOLOWER = http://localhost:5000/user/getFollower

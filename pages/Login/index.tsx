@@ -52,9 +52,11 @@ const Login = () => {
       mode:"all"
   })
 
-  const handleFunc = () => {
+  const handleFunc = async () => {
       const { email, password} = getValues() 
-      dispatch(loginAndFetchUser({email, password}))
+      console.log(email)
+      console.log(password)
+      await dispatch(loginAndFetchUser({email, password}))
       .then(() => {
           user._id && router.push('/')
         })
