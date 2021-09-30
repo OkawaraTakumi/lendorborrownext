@@ -44,7 +44,7 @@ const Register = () => {
     const handleFunc = () => {
         const {name, email, password} = getValues() 
         axios.defaults.withCredentials = true;
-        axios.post((`${process.env.POST_REGIST_URL}`), {
+        axios.post((`${process.env.NEXT_PUBLIC_POST_REGIST_URL}`), {
             name,
             email,
             password
