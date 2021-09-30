@@ -40,6 +40,7 @@ rejectValue:ErrorResponse
 'loginSlice/loginAndFetchUser',
 async ({email, password},{ getState ,rejectWithValue }) => {
 try {
+    axios.defaults.withCredentials = true;
     const { data } = await axios.post(`${process.env.NEXT_PUBLIC_POST_LOGIN_URL}`, {
          email,
          password
@@ -51,9 +52,11 @@ try {
     console.log('ログイン失敗')
     return rejectWithValue({success: false}) 
 }
+console.log(9)
  try{
      axios.defaults.withCredentials = true;
      const  res  = await axios.get(`${process.env.NEXT_PUBLIC_GET_CURRENT_USER_URL}`)
+     console.log(res)
      return res.data.user
  } catch (error) {
     return rejectWithValue({success: false})
