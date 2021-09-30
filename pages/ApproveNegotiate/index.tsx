@@ -49,7 +49,7 @@ const ApproveNegotiate = () => {
 
     useEffect(() => {
         if(onBeingSuggested !== undefined) {
-            setItems(onBeingSuggested.onBeingSuggested)
+            onBeingSuggested.onBeingSuggested && setItems(onBeingSuggested.onBeingSuggested)
         }
     },[onBeingSuggested])
 
