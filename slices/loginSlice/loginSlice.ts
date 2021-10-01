@@ -93,7 +93,6 @@ async (_,{ rejectWithValue }) => {
      const  res  = await axios.post(`${process.env.NEXT_PUBLIC_POST_LOGOUT_URL}`)
          return { name:'', _id:''}
  } catch (error) {
-    console.log(9)
     return  rejectWithValue()
  }
 }

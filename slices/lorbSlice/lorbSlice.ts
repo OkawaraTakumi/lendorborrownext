@@ -347,7 +347,6 @@ async ({
           id        
       },
       { getState ,rejectWithValue }) => {
-console.log('RejectNegotiateが呼び出されました')
 const res = await axios.put(`${process.env.NEXT_PUBLIC_PUT_REJECT_NEGOTIATE}`, {
   userTo,
   userFrom,
