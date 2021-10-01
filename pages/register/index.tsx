@@ -41,10 +41,10 @@ const Register = () => {
         mode:"all"
     })
 
-    const handleFunc = () => {
+    const handleFunc = async () => {
         const {name, email, password} = getValues() 
         axios.defaults.withCredentials = true;
-        axios.post((`${process.env.NEXT_PUBLIC_POST_REGIST_URL}`), {
+        await axios.post((`${process.env.NEXT_PUBLIC_POST_REGIST_URL}`), {
             name,
             email,
             password
