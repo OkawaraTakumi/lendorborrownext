@@ -47,9 +47,7 @@ async (email,{ getState ,rejectWithValue }) => {
 
  try{
      axios.defaults.withCredentials = true;
-     console.log(email)
      const  res  = await axios.get(`${process.env.NEXT_PUBLIC_GET_USER_NAME}/${email}`)
-     console.log(res)
      if(res.data.success === false){
       return rejectWithValue({})
     }
@@ -69,11 +67,9 @@ export const FollowUser = createAsyncThunk<boolean, {[email:string]:string},
 }>(
 'UserSlice/FollowUser',
 async (email,{ getState ,rejectWithValue }) => {
-  console.log(getState().user.searchUser.name)
   if(window.confirm(`${getState().user.searchUser.name}をフォローします。`)){
       try{
           axios.defaults.withCredentials = true;
-          console.log(email)
           const  res  = await axios.post(`${process.env.NEXT_PUBLIC_POST_FOLLOW_USER}`, email
           )
           if(res.data.success === false){

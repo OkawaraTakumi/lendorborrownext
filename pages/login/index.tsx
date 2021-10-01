@@ -54,8 +54,6 @@ const Login = () => {
 
   const handleFunc = async () => {
       const { email, password} = getValues() 
-      console.log(email)
-      console.log(password)
       await dispatch(loginAndFetchUser({email, password}))
       .then(() => {
           user._id && router.push('/')

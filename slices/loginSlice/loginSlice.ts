@@ -49,14 +49,11 @@ try {
         return rejectWithValue({success: false}) 
     }
 } catch (err) {
-    console.log('ログイン失敗')
     return rejectWithValue({success: false}) 
 }
-console.log(9)
  try{
      axios.defaults.withCredentials = true;
      const  res  = await axios.get(`${process.env.NEXT_PUBLIC_GET_CURRENT_USER_URL}`)
-     console.log(res)
      return res.data.user
  } catch (error) {
     return rejectWithValue({success: false})
@@ -96,7 +93,6 @@ async (_,{ rejectWithValue }) => {
      const  res  = await axios.post(`${process.env.NEXT_PUBLIC_POST_LOGOUT_URL}`)
          return { name:'', _id:''}
  } catch (error) {
-    console.log(9)
     return  rejectWithValue()
  }
 }
