@@ -22,11 +22,11 @@ export const Borrow:NextPage<Props> = ({
 };
 
 export const getServerSideProps :GetServerSideProps = async (context) => {
-    const { id } = context.query;
+    const { BorrowId } = context.query;
 
     return { 
       props:{
-        id
+        BorrowId
     } }
 }
 
