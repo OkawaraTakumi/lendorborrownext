@@ -1,6 +1,7 @@
 import { SelectkeepLorB } from "../../slices/lorbSlice/lorbSlice";
 import { NegotiateTemplate } from "../../components/templates";
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
+import { useEffect } from "react";
 
 interface Props {
   LendId:string
@@ -9,6 +10,10 @@ interface Props {
 export const Lend :NextPage<Props>= ({
   LendId
 }) => {
+  useEffect(() => {
+    console.log(LendId)
+  },[])
+
     return (
         <>
             {

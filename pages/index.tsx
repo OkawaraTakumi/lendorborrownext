@@ -58,13 +58,6 @@ export const Home = () => {
     const keepLorB = useAppSelector(SelectkeepLorB)
     const user = useAppSelector(SelectUser)
 
-    useEffect(() => {
-        dispatch(fetchUser())
-        dispatch(getOnMaking())
-        dispatch(getOnBeingSuggested())
-        dispatch(getLorBKeepLorB())
-    },[dispatch])
-
     return (
         <>
             {
@@ -94,7 +87,6 @@ export const Home = () => {
                                         {'作成依頼はありません'}
                                     </TypographyAtoms>
                                     }
-
                                 </Paper>
                             </div>  
 

@@ -67,6 +67,7 @@ export const NegotiateTemplate :FC<Props> = ({
     const [userTo , setUserTo] = useState<string | undefined>('')
     const KeepOn:keepLorB|undefined = useAppSelector(willSelect)
     useEffect(() => {
+        console.log(KeepOn)
         const KeepOnChild = KeepOn && (KeepOn[KeeponProps] as resObj[])
             KeepOnChild && setKeepOnWill(KeepOnChild[Number(id)])
     },[KeepOn, id, KeeponProps])

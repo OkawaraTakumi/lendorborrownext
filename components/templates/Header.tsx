@@ -13,6 +13,7 @@ import { useAppSelector, useAppDispatch } from "../../redux-app/hooks";
 import { SelectUser, fetchUser, logout} from "../../slices/loginSlice/loginSlice";
 import { useEffect, useState } from "react";
 import SideNav from "../organisms/SideNav";
+import { getLorBKeepLorB, getOnBeingSuggested, getOnMaking } from "../../slices/lorbSlice/lorbSlice";
 
 
 const useStyles = makeStyles((thema) => ({
@@ -40,7 +41,10 @@ const Header = () => {
 
     useEffect(() => {
         dispatch(fetchUser())
-    }, [])
+        dispatch(getOnMaking())
+        dispatch(getOnBeingSuggested())
+        dispatch(getLorBKeepLorB())
+    },[dispatch])
 
     const handleLogout = () => {
         dispatch(logout())
