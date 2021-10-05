@@ -2,9 +2,6 @@ import React from "react";
 import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../redux-app/hooks";
 import { 
-    getOnMaking,
-    getOnBeingSuggested,
-    getLorBKeepLorB,
     SelectOnMaking,
     SelectonBeingSuggested,
     SelectkeepLorB         
