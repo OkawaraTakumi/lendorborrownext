@@ -2,9 +2,6 @@ import React from "react";
 import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../redux-app/hooks";
 import { 
-    getOnMaking,
-    getOnBeingSuggested,
-    getLorBKeepLorB,
     SelectOnMaking,
     SelectonBeingSuggested,
     SelectkeepLorB         
@@ -58,13 +55,6 @@ export const Home = () => {
     const keepLorB = useAppSelector(SelectkeepLorB)
     const user = useAppSelector(SelectUser)
 
-    useEffect(() => {
-        dispatch(fetchUser())
-        dispatch(getOnMaking())
-        dispatch(getOnBeingSuggested())
-        dispatch(getLorBKeepLorB())
-    },[dispatch])
-
     return (
         <>
             {
@@ -94,7 +84,6 @@ export const Home = () => {
                                         {'作成依頼はありません'}
                                     </TypographyAtoms>
                                     }
-
                                 </Paper>
                             </div>  
 
