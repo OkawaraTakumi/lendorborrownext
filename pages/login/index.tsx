@@ -1,82 +1,80 @@
 import { FormBuilder } from '../../components/molecules';
-import { 
-  useState,
-  useEffect
-} from 'react';
-import { useForm, FieldValues } from "react-hook-form";
+import { useState, useEffect } from 'react';
+import { useForm, FieldValues } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../redux-app/hooks';
-import { 
-  loginAndFetchUser, 
+import {
+  loginAndFetchUser,
   SelectUser,
   fetchUser,
-  SelectSuccess
+  SelectSuccess,
 } from '../../slices/loginSlice/loginSlice';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 interface Props {
-  label:string,
-  name:string,
-  errorText?:string,
-  pattern?:RegExp
+  label: string;
+  name: string;
+  errorText?: string;
+  pattern?: RegExp;
+  type?: string;
 }
-const propsArray:Props[] = [
-      {
-          label:'メールアドレス',
-          name:'email',
-          errorText:'メールアドレスの形式が不正です',
-          pattern:/.+@.+/
-      },
-      {
-          label:'パスワード',
-          name:'password',
-          errorText:'パスワードの形式が不正です',
-          pattern:/^[a-zA-Z0-9!#$%&()*+,.:;=?@[\]^_{}-]+$/
-      }
-  ]
+const propsArray: Props[] = [
+  {
+    label: 'メールアドレス',
+    name: 'email',
+    errorText: 'メールアドレスの形式が不正です',
+    pattern: /.+@.+/,
+  },
+  {
+    label: 'パスワード',
+    name: 'password',
+    errorText: 'パスワードの形式が不正です',
+    pattern: /^[a-zA-Z0-9!#$%&()*+,.:;=?@[\]^_{}-]+$/,
+    type: 'password',
+  },
+];
 const Login = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const [errorState, setErrorState] = useState<string>('')
-  const user = useAppSelector(SelectUser)
-  const success = useAppSelector(SelectSuccess)
+  const [errorState, setErrorState] = useState<string>('');
+  const user = useAppSelector(SelectUser);
+  const success = useAppSelector(SelectSuccess);
   useEffect(() => {
-      dispatch(fetchUser())
-  },[dispatch])
+    dispatch(fetchUser());
+  }, [dispatch]);
   useEffect(() => {
-      if(user._id){
-          router.push('/')
-      }
-  },[user, router])
-  const { formState:{errors} , control, getValues} = useForm<FieldValues>({
-      mode:"all"
-  })
+    if (user._id) {
+      router.push('/');
+    }
+  }, [user, router]);
+  const {
+    formState: { errors },
+    control,
+    getValues,
+  } = useForm<FieldValues>({
+    mode: 'all',
+  });
 
   const handleFunc = async () => {
-      const { email, password} = getValues() 
-      await dispatch(loginAndFetchUser({email, password}))
-      .then(() => {
-          user._id && router.push('/')
-        })
+    const { email, password } = getValues();
+    await dispatch(loginAndFetchUser({ email, password })).then(() => {
+      user._id && router.push('/');
+    });
     //   .catch(() => setErrorState('ログインに失敗しました'))
-  }
-
+  };
 
   return (
-      <>
-          {!success && <p>ログインに失敗しました</p>}
-          <FormBuilder propsArray={propsArray} 
-                       control={control} 
-                       errors={errors} 
-                       handleFunc={handleFunc} 
-                       textWillShow="ログイン"
-          />
-          <Link 
-              href='/register' 
-          >
-              新規登録はこちら
-          </Link>
-      </>
+    <>
+      {!success && <p>ログインに失敗しました</p>}
+      <FormBuilder
+        propsArray={propsArray}
+        control={control}
+        errors={errors}
+        handleFunc={handleFunc}
+        textWillShow="ログイン"
+      />
+      <Link href="/register">新規登録はこちら</Link>
+    </>
   );
 };
 
