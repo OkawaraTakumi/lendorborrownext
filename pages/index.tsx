@@ -54,12 +54,16 @@ export const Home = () => {
   const keepLorB = useAppSelector(SelectkeepLorB);
   const user = useAppSelector(SelectUser);
 
+  const fetchData = async () => {
+    await dispatch(fetchUser());
+    await dispatch(getOnMaking());
+    await dispatch(getOnBeingSuggested());
+    await dispatch(getLorBKeepLorB());
+  };
+
   useEffect(() => {
-    dispatch(fetchUser());
-    dispatch(getOnMaking());
-    dispatch(getOnBeingSuggested());
-    dispatch(getLorBKeepLorB());
-  }, [dispatch]);
+    fetchData();
+  }, []);
 
   return (
     <>
